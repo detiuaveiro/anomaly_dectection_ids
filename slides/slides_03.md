@@ -75,7 +75,48 @@ Anomalies can be broadly categorized as:
 
 ![](figures/anomaly.png)
 
-# Anomaly Detection
+# Anomaly Detection - Traditional Methods
+
+## Traditional Methods - IsolationForest
+
+- IsolationForest **isolates** observations by randomly selecting a feature and then randomly selecting a split value between the maximum and minimum values of the selected feature.
+
+- Since recursive partitioning can be represented by a tree structure, the number of splittings required to isolate a sample is equivalent to the path length from the root node to the terminating node.
+
+- This path length, averaged over a forest of such random trees, is a measure of normality and our decision function.
+
+**Random partitioning** produces noticeably shorter paths for anomalies. 
+Hence, when a forest of random trees collectively produce shorter path lengths for particular samples, they are highly likely to be **anomalies**.
+
+## Traditional Methods - IsolationForest #2
+
+![](figures/IF.png)
+
+## Traditional Methods - Local Outlier Factor
+
+- Local Outlier Factor (LOF) measures the local deviation of the density of a given sample with respect to its neighbors. 
+
+- It is local in that the anomaly score depends on how isolated the object is with respect to the surrounding neighborhood.
+
+- More precisely, locality is given by k-nearest neighbors, whose distance is used to estimate the local density. By comparing the local density of a sample to the local densities of its neighbors, one can identify samples that have a substantially lower density than their neighbors. These are considered outliers.
+
+## Traditional Methods - Local Outlier Factor #2
+
+![](figures/LOF.png)
+
+## Traditional Methods - OneClassSVM
+
+- Many approaches are based on the estimation of the density of probability for the normal data. Anomlies corresponds to those samples where the density of probability is "very low".
+
+- Now, SVMs are max-margin methods, i.e. they do not model a probability distribution. Here the idea is to find a function that is positive for regions with high density of points, and negative for small densities.
+
+- One-Class SVM is similar, but instead of using a hyperplane to separate two classes of instances, it uses a hypersphere to encompass all of the instances. Now think of the "margin" as referring to the outside of the hypersphere -- so by "the largest possible margin", we mean "the smallest possible hypersphere".
+
+## Traditional Methods - OneClassSVM #2
+
+![](figures/OCSVM.png)
+
+# Anomaly Detection - Clustering
 
 ## Clustering
 
@@ -91,41 +132,11 @@ Generally, it is used as a process to find meaningful structure, explanatory und
 
 - **Partitioning Methods:** These methods partition the objects into $k$ clusters and each partition forms one cluster. This method is used to optimize an objective criterion similarity function such as when the distance is a major parameter.
 
-## Clustering: Anomaly Detection
+## Clustering - Anomaly Detection
 
 ![](figures/clustering_anomaly.png)
 
-## Blind Source Separation
-
-Blind Source Separation (BSS) refers to a problem where both the sources and the mixing methodology are unknown, only mixture signals are available for further separation process.
-
-In several situations it is desirable to recover all individual sources from the mixed signal, or at least to segregate a particular source.
-
-## Blind Source Separation: PCA
-
-**Principal component analysis**, or PCA, is a statistical procedure that allows you to summarize the information content in large data tables by means of a smaller set of “summary indices” that can be more easily visualized and analyzed.
-
-![](figures/PCA.png)
-
-## Blind Source Separation: ICA
-
-**Independent Component Analysis** (ICA) is a powerful technique in the field of data analysis that allows you to separate and identify the underlying independent sources in a multivariate data set.
-
-![](figures/PCA_vs_ICA.png)
-
-## Blind Source Separation: NNMF
-
-- **Non-negative matrix factorization (NNMF)** is a group of algorithms in multivariate analysis and linear algebra where a matrix $V$ is factorized into two matrices $W$ and $H$, with the property that all three matrices have no negative elements.
-
-- This non-negativity makes the resulting matrices easier to inspect. Also, in applications such as processing of audio spectrograms or muscular activity, non-negativity is inherent to the data being considered.
-
-![](figures/NNMF.png)
-
-## Blind Source Separation: Anomaly Detection
-
-![](figures/nnmf_anomaly.png)
-
-# Auto Encoders
+# Anomaly Detection - Auto Encoders
 
 ## Neural Networks 
 
@@ -153,55 +164,6 @@ However, if some sort of structure exists in the data (ie. correlations between 
 - This network can be trained by minimizing the reconstruction error;
 - The bottleneck is a key attribute of our network design; without the presence of an information bottleneck, our network could easily learn to simply memorize the input values by passing these values along through the network.
 
-# Other Methods
-
-## Anomaly Detection - IsolationForest
-
-- IsolationForest **isolates** observations by randomly selecting a feature and then randomly selecting a split value between the maximum and minimum values of the selected feature.
-
-- Since recursive partitioning can be represented by a tree structure, the number of splittings required to isolate a sample is equivalent to the path length from the root node to the terminating node.
-
-- This path length, averaged over a forest of such random trees, is a measure of normality and our decision function.
-
-**Random partitioning** produces noticeably shorter paths for anomalies. 
-Hence, when a forest of random trees collectively produce shorter path lengths for particular samples, they are highly likely to be **anomalies**.
-
-## Anomaly Detection - IsolationForest #2
-
-![](figures/IF.png)
-
-## Anomaly Detection - Local Outlier Factor
-
-- Local Outlier Factor (LOF) measures the local deviation of the density of a given sample with respect to its neighbors. 
-
-- It is local in that the anomaly score depends on how isolated the object is with respect to the surrounding neighborhood.
-
-- More precisely, locality is given by k-nearest neighbors, whose distance is used to estimate the local density. By comparing the local density of a sample to the local densities of its neighbors, one can identify samples that have a substantially lower density than their neighbors. These are considered outliers.
-
-## Anomaly Detection - Local Outlier Factor #2
-
-![](figures/LOF.png)
-
-## Anomaly Detection - OneClassSVM
-
-- Many approaches are based on the estimation of the density of probability for the normal data. Anomlies corresponds to those samples where the density of probability is "very low".
-
-- Now, SVMs are max-margin methods, i.e. they do not model a probability distribution. Here the idea is to find a function that is positive for regions with high density of points, and negative for small densities.
-
-- One-Class SVM is similar, but instead of using a hyperplane to separate two classes of instances, it uses a hypersphere to encompass all of the instances. Now think of the "margin" as referring to the outside of the hypersphere -- so by "the largest possible margin", we mean "the smallest possible hypersphere".
-
-## Anomaly Detection - OneClassSVM #2
-
-![](figures/OCSVM.png)
-
-# Tips
-
-## Feature Scalling
-
-- Feature scaling is the process of normalizing the range of features in a dataset.
-- Real-world datasets often contain features that are varying in degrees of magnitude, range, and units. 
-- Therefore, in order for machine learning models to interpret these features on the same scale, we need to perform feature scaling.
-
 # Resources
 
 ## Resources
@@ -210,4 +172,12 @@ Hence, when a forest of random trees collectively produce shorter path lengths f
 
 [AutoEncoders](https://www.jeremyjordan.me/autoencoders/)
 
+[Deep Learning for Anomaly Detection](https://ff12.fastforwardlabs.com/)
+
 [Principal components analysis](PCAhttps://www.jeremyjordan.me/principal-components-analysis/)
+
+# Demo
+
+## Demo
+
+![](figures/qr-code.png)
